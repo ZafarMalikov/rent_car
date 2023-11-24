@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rent_car
+    password: 123
+    username: postgres
+
+
+
+  mvc:
+    hidden-method:
+      filter:
+        enabled: true

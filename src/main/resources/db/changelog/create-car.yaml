@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-car
+      author: zafarmalikov704@gmail.com
+      changes:
+        - sqlFile:
+            path: 13-10-2023-createCar.sql
+            relativeToChangelogFile: true
+

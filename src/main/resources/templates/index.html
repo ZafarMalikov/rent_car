@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+            xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Ridex - Rent your favourite car</title>
+    <link href="/css/index.css" type="text/css" rel="stylesheet">
+    <link rel="shortcut icon" href="https://static.vecteezy.com/system/resources/previews/023/795/026/non_2x/register-mark-icon-isolated-on-white-background-vector.jpg" type="image/svg+xml">
+    <script>
+        'use strict';
+
+        /**
+         * navbar toggle
+         */
+
+        const overlay = document.querySelector("[data-overlay]");
+        const navbar = document.querySelector("[data-navbar]");
+        const navToggleBtn = document.querySelector("[data-nav-toggle-btn]");
+        const navbarLinks = document.querySelectorAll("[data-nav-link]");
+
+        const navToggleFunc = function () {
+            navToggleBtn.classList.toggle("active");
+            navbar.classList.toggle("active");
+            overlay.classList.toggle("active");
+        }
+
+        navToggleBtn.addEventListener("click", navToggleFunc);
+        overlay.addEventListener("click", navToggleFunc);
+
+        for (let i = 0; i < navbarLinks.length; i++) {
+            navbarLinks[i].addEventListener("click", navToggleFunc);
+        }
+
+
+
+        /**
+         * header active on scroll
+         */
+
+        const header = document.querySelector("[data-header]");
+
+        window.addEventListener("scroll", function () {
+            window.scrollY >= 10 ? header.classList.add("active")
+                : header.classList.remove("active");
+        });
+    </script>
+
+</head>
+<body>
+<button>
+</button>
+
+<header class="header" data-header>
+    <div class="container">
+
+        <div class="overlay" data-overlay></div>
+
+        <a href="index.html" class="logo">
+            <img src="https://habrastorage.org/getpro/moikrug/uploads/company/100/007/138/9/logo/medium_6ab683fd64e2931411699e2903c78cc4.png" alt="Ridex logo">
+        </a>
+
+        <nav class="navbar" data-navbar>
+            <ul class="navbar-list">
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+            <a sec:authorize="isAnonymous()" th:href="@{reg/sign-in.html}" class="btn user-btn" aria-label="Profile">
+                <img width="40px"
+                     height="40px"  src="https://static.thenounproject.com/png/4281473-200.png">
+            </a>
+
+
+
+            <form sec:authorize="isAuthenticated()" th:action="@{/user-profile}"  th:method="get">
+                <button type="submit">
+                    <img th:src="${user}" alt="Avatar" class="avatar">
+                </button>
+            </form>
+
+
+
+            <form sec:authorize="isAuthenticated()" th:action="@{/car/car-create}"  th:method="get">
+                <button type="submit">
+                    <img src="https://api.sincrod.com/social/1.0/image/caravatar.png" alt="Avatar" class="avatar">
+                </button>
+            </form>
+        </div>
+
+    </div>
+</header>
+
+
+
+
+<main>
+    <article>
+        <section class="section hero" id="home">
+            <div class="container" >
+                <div class="hero-content">
+                    <h2 class="h1 hero-title">The easy way to rent</h2>
+                </div>
+
+                <div class="hero-banner"></div>
+
+                <form action="/car" class="hero-form" method="get">
+
+                    <div class="input-wrapper">
+                        <label for="input-1" class="input-label">Start date</label>
+
+                        <input type="date" name="start" id="input-1" class="input-field"
+                               placeholder="What car are you looking?">
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="input-2" class="input-label">Return date</label>
+
+                        <input type="date" name="return" id="input-2" class="input-field" placeholder="Add an amount in $">
+                    </div>
+
+                    <button  type="submit" class="btn">Search</button>
+
+                </form>
+
+            </div>
+        </section>
+
+
+
+
+
+        <!--
+          - #FEATURED CAR
+        -->
+        <section class="section featured-car" id="featured-car">
+            <div class="container">
+
+                <div class="title-wrapper">
+                    <h2 class="h2 section-title">Featured cars</h2>
+                </div>
+
+                <ul class="featured-car-list">
+                    <li>
+                        <div  th:each="car:${dateCars}">
+
+                        <div class="featured-car-card">
+                            <figure class="card-banner">
+                                <img th:src="${car.getPicture()}"  th:alt="${car.getName()}" loading="lazy" width="440" height="300"
+                                     class="w-100">
+                            </figure>
+
+                            <div class="card-content">
+
+                                <div class="card-title-wrapper">
+                                    <h3 class="h3 card-title">
+                                        <a th:href="@{/car/{id}(id=${car.getId()})}"><p th:text="${car.getName()}"></p></a>
+                                    </h3>
+
+                                </div>
+
+                                <ul class="card-list">
+
+                                    <li class="card-list-item">
+                                        <ion-icon name="people-outline"></ion-icon>
+
+                                        <span class="card-item-text" th:text="${car.getNumberOfSeats()}"></span>
+                                    </li>
+
+
+                                </ul>
+
+                                <div class="card-price-wrapper">
+
+                                    <p class="card-price">
+                                        <strong>$<P th:text="${car.getPrice()}"></P></strong> / month
+                                    </p>
+
+                                    <button class="btn fav-btn" aria-label="Add to favourite list">
+                                        <ion-icon name="heart-outline"></ion-icon>
+                                    </button>
+
+                                    <form th:method="get" th:action="@{/car/rent/{carId}(carId=${car.getId()})}" >
+                                    <button type="submit" class="btn">Rent now</button>
+                                    </form>
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </section>
+    </article>
+</main>
+
+
+<!--<script src="js/script.js"></script>-->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>

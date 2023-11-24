@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link href="/css/profile.css" rel="stylesheet" type="text/css">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+                    <div class="user-info">
+                        <img class="img-profile img-circle img-responsive center-block" th:src="${userInfo.getPicture()}" alt="avatar">
+                    </div>
+                <div class="content-panel">
+                    <h2 class="title">Profile<span class="pro-label label label-warning"></span></h2>
+<!--                    <form th:action="@{/user/{userId}(userId=${userInfo.getId()})}"  th:method="PUT" class="form-horizontal">-->
+<!--                        <fieldset class="fieldset">-->
+<!--                            <h3 class="fieldset-title">Personal Info</h3>-->
+<!--                            <div class="form-group avatar">-->
+<!--                                <figure class="figure col-md-2 col-sm-3 col-xs-12">-->
+<!--                                    <img class="img-rounded img-responsive" th:src="${userInfo.getPicture()}" alt="">-->
+<!--                                </figure>-->
+<!--                                <div class="form-inline col-md-10 col-sm-9 col-xs-12">-->
+<!--                                    <input type="file" class="file-uploader pull-left">-->
+<!--                                    <button type="submit" class="btn btn-sm btn-default-alt pull-left">Update Image</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">User Name</label>-->
+<!--                                <div class="col-md-10 col-sm-9 col-xs-12">-->
+<!--                                    <input type="text" class="form-control" th:value="${userInfo.getUsername()}">-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">First Name</label>-->
+<!--                                <div class="col-md-10 col-sm-9 col-xs-12">-->
+<!--                                    <input type="text"  name="username" class="form-control" th:value="${userInfo.getUsername()}">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-md-2 col-sm-3 col-xs-12 control-label">Last Name</label>-->
+<!--                                <div class="col-md-10 col-sm-9 col-xs-12">-->
+<!--                                    <input type="text" name="lastname" class="form-control" th:value="${userInfo.getLastName()}">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </fieldset>-->
+<!--                        <fieldset class="fieldset">-->
+<!--                            <h3 class="fieldset-title">Contact Info</h3>-->
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Email</label>-->
+<!--                                <div class="col-md-10 col-sm-9 col-xs-12">-->
+<!--                                    <input type="email" name="email" class="form-control" th:value="${userInfo.getEmail()}">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="form-group">-->
+<!--                                <label class="col-md-2  col-sm-3 col-xs-12 control-label">Instagram</label>-->
+<!--                                <div class="col-md-10 col-sm-9 col-xs-12">-->
+<!--                                    <input type="url" class="form-control" value="">-->
+<!--                                    <p class="help-block"></p>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </fieldset>-->
+<!--                        <hr>-->
+<!--                        <div class="form-group">-->
+<!--                            <div class="col-md-10 col-sm-9 col-xs-12 col-md-push-2 col-sm-push-3 col-xs-push-0">-->
+<!--                                <input class="btn btn-primary" type="submit" value="Update Profile">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </form>-->
+
+
+                    <h1>Your Cars</h1>
+
+
+
+                    <section class="section featured-car" id="featured-car">
+                        <div class="container">
+
+                            <div class="title-wrapper">
+                            </div>
+
+                            <ul class="featured-car-list" th:each="cars:${userCars}">
+
+                                <li>
+                                    <div class="featured-car-card">
+
+                                        <figure class="card-banner">
+                                            <img th:src="${cars.getPicture()}"  th:alt="${cars.getModel()}" loading="lazy" width="440" height="300"
+                                                 class="w-100">
+                                        </figure>
+
+                                        <div class="card-content">
+
+                                            <div class="card-title-wrapper">
+                                                <h3 class="h3 card-title">
+                                                    <p th:text="${cars.getModel()}"></p>
+                                                </h3>
+
+                                            </div>
+
+                                            <ul class="card-list">
+
+                                                <li class="card-list-item">
+                                                    <ion-icon name="people-outline"></ion-icon>
+
+                                                    <span class="card-item-text" ><P th:text="${cars.getNumberOfSeats()}"></P> people</span>
+                                                </li>
+
+
+                                            </ul>
+
+                                            <div class="card-price-wrapper">
+
+                                                <p class="card-price">
+                                                    <strong> Price : <P th:text="${cars.getPrice()}"></P></strong> / month
+                                                </p>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </section>
+
+
+
+                </div>
+</body>
+</html>
