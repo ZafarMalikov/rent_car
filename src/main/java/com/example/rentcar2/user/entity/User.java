@@ -38,15 +38,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        Set<SimpleGrantedAuthority> authoritySet=new HashSet<>();
-//        for (Role role : roleList) {
-//            for (Permission permission : role.getPermissions()) {
-//                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(permission.getCode());
-//        authoritySet.add(simpleGrantedAuthority);
-//            }
-//        }
-//        return authoritySet;
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
